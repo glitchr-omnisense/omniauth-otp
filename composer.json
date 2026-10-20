@@ -1,0 +1,48 @@
+{
+    "name": "omniauth/totp",
+    "type": "library",
+    "description": "Omniauth's authenticator applications (TOTP) over spomky-labs/otphp, under any PHP host: the second factor, its enrolment (a secret and its otpauth:// address) and its revocation, with scheb/2fa's parameters (SHA1, 30 s, 6 digits, the same leeway and provisioning address) so the secrets an application keeps today go on working - and a code accepted once only.",
+    "keywords": ["authentication", "two-factor", "2fa", "totp", "authenticator", "otp", "framework-agnostic", "omniauth"],
+    "homepage": "https://github.com/glitchr-studio/omniauth-totp",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marco Meyer",
+            "email": "marco.meyer@glitchr.io"
+        }
+    ],
+    "require": {
+        "php": ">=8.2",
+        "omniscient/omniauth": "^1.0@dev",
+        "paragonie/constant_time_encoding": "^2.6|^3.0",
+        "psr/cache": "^2.0|^3.0",
+        "psr/clock": "^1.0",
+        "psr/simple-cache": "^2.0|^3.0",
+        "spomky-labs/otphp": "^11.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.0",
+        "scheb/2fa": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Omniauth\\Totp\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Omniauth\\Totp\\Tests\\": "Tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-1.x": "1.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
