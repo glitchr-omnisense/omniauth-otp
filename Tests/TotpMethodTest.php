@@ -1,21 +1,21 @@
 <?php
 
-namespace Omniauth\Totp\Tests;
+namespace Omniauth\Otp\Tests;
 
 use Omniauth\Context;
 use Omniauth\Factor;
 use Omniauth\Failure;
+use Omniauth\Otp\CacheUsedSteps;
+use Omniauth\Otp\Contract\SecretBox;
+use Omniauth\Otp\SealedTotpSecrets;
+use Omniauth\Otp\Testing\AuthenticatorApp;
+use Omniauth\Otp\Tests\Fixtures\Kit;
+use Omniauth\Otp\TotpMethod;
 use Omniauth\Status;
 use Omniauth\Testing\ArrayCache;
 use Omniauth\Testing\FixedClock;
 use Omniauth\Testing\InMemoryStore;
 use Omniauth\Testing\TestAccount;
-use Omniauth\Totp\CacheUsedSteps;
-use Omniauth\Totp\Contract\SecretBox;
-use Omniauth\Totp\SealedTotpSecrets;
-use Omniauth\Totp\Testing\AuthenticatorApp;
-use Omniauth\Totp\Tests\Fixtures\Kit;
-use Omniauth\Totp\TotpMethod;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 

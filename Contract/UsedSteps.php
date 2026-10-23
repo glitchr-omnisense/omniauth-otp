@@ -1,10 +1,10 @@
 <?php
 
-namespace Omniauth\Totp\Contract;
+namespace Omniauth\Otp\Contract;
 
 /**
  * The time steps whose code an account already used: a code is accepted once
- * (RFC 6238 §5.2), and none older than the last one accepted. Omniauth\Totp\CacheUsedSteps
+ * (RFC 6238 §5.2), and none older than the last one accepted. Omniauth\Otp\CacheUsedSteps
  * keeps them in any PSR-6 pool or PSR-16 cache; a host may keep them anywhere
  * else (a column, its rate limiter's store).
  */

@@ -1,13 +1,13 @@
 <?php
 
-namespace Omniauth\Totp\Tests;
+namespace Omniauth\Otp\Tests;
 
 use Omniauth\Omniauth;
-use Omniauth\Totp\TotpMethod;
+use Omniauth\Otp\TotpMethod;
 use PHPUnit\Framework\TestCase;
 
 /**
- * omniauth/totp with no framework: in PHP processes of their own (this one
+ * omniauth/otp with no framework: in PHP processes of their own (this one
  * has loaded PHPUnit), a whole enrolment and sign-in by hand, and every
  * class of the package loaded. Nothing may come from outside but omniauth,
  * otphp and what it requires (paragonie's constant-time encoding), the PSR
@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 final class BareTest extends TestCase
 {
     private const FOREIGN = '~^(?:Symfony\\\\(?!Component\\\\PasswordHasher\\\\|Polyfill\\\\)|(?:Illuminate|Laravel|Doctrine|Twig|Scheb|Lcobucci|Webauthn|League|Omnibridge|Base|App)\\\\)~';
-    private const ALLOWED_FILES = '~/vendor/(?:psr/(?:cache|clock|event-dispatcher|simple-cache)|symfony/password-hasher|spomky-labs/otphp|paragonie/constant_time_encoding|omniscient/omniauth|omniauth/totp|composer)/|/vendor/autoload\.php$~';
+    private const ALLOWED_FILES = '~/vendor/(?:psr/(?:cache|clock|event-dispatcher|simple-cache)|symfony/password-hasher|spomky-labs/otphp|paragonie/constant_time_encoding|omniscient/omniauth|omniauth/otp|composer)/|/vendor/autoload\.php$~';
 
     public function testAnEnrolmentAndASignInByHandLoadNothingElse(): void
     {
@@ -37,11 +37,12 @@ final class BareTest extends TestCase
 
     public function testEveryClassLoadsWithTheRequiredPackagesAlone(): void
     {
-        $report = self::php([__DIR__.'/Fixtures/load-all.php', self::autoload(), \dirname(__DIR__), 'Omniauth\Totp']);
+        $report = self::php([__DIR__.'/Fixtures/load-all.php', self::autoload(), \dirname(__DIR__), 'Omniauth\Otp']);
 
         self::assertContains(TotpMethod::class, $report['loaded']);
-        self::assertContains('Omniauth\Totp\Testing\AuthenticatorApp', $report['loaded']);
-        self::assertContains('Omniauth\Totp\SealedTotpSecrets', $report['loaded']);
+        self::assertContains('Omniauth\Otp\Testing\AuthenticatorApp', $report['loaded']);
+        self::assertContains('Omniauth\Otp\SealedTotpSecrets', $report['loaded']);
+        self::assertContains('Omniauth\Otp\SodiumSecretBox', $report['loaded']);
         self::assertSame([], self::foreign($report['symbols']));
         self::assertSame([], self::outside($report['files'], $report['eager']));
     }
@@ -53,7 +54,7 @@ final class BareTest extends TestCase
         if (!class_exists($scheb)) {
             self::markTestSkipped('scheb/2fa is not installed.');
         }
-        $report = self::php([__DIR__.'/Fixtures/load-all.php', self::autoload(), \dirname(__DIR__), 'Omniauth\Totp', $scheb]);
+        $report = self::php([__DIR__.'/Fixtures/load-all.php', self::autoload(), \dirname(__DIR__), 'Omniauth\Otp', $scheb]);
 
         self::assertContains($scheb, self::foreign($report['symbols']));
         self::assertNotEmpty(preg_grep('~/scheb/~', self::outside($report['files'], $report['eager'])));
@@ -91,7 +92,7 @@ final class BareTest extends TestCase
                 return $vendor.'/autoload.php';
             }
         }
-        self::markTestSkipped('No autoloader knows omniauth/totp\'s tests.');
+        self::markTestSkipped('No autoloader knows omniauth/otp\'s tests.');
     }
 
     /** @return array<string, mixed> */

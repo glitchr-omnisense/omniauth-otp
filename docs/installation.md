@@ -6,7 +6,7 @@ order: 1
 # Installation, in plain PHP
 
 ```sh
-composer require omniscient/omniauth omniauth/totp
+composer require omniscient/omniauth omniauth/otp
 ```
 
 It requires omniscient/omniauth, spomky-labs/otphp (the library scheb/2fa verifies with) and the
@@ -14,7 +14,7 @@ PSR cache and clock interfaces. No framework: the secrets stay in your table, be
 `Contract\TotpSecrets`; the steps already used, in any PSR-6 pool or PSR-16 cache.
 
 The whole thing by hand - the in-memory stores of `Omniauth\Testing` stand in for yours, and
-`Omniauth\Totp\Testing\AuthenticatorApp` for the person's phone:
+`Omniauth\Otp\Testing\AuthenticatorApp` for the person's phone:
 
 ```php
 <?php
@@ -31,9 +31,9 @@ use Omniauth\Testing\ArrayCache;
 use Omniauth\Testing\FixedClock;
 use Omniauth\Testing\InMemoryStore;
 use Omniauth\Testing\TestAccount;
-use Omniauth\Totp\CacheUsedSteps;
-use Omniauth\Totp\Testing\AuthenticatorApp;
-use Omniauth\Totp\TotpMethod;
+use Omniauth\Otp\CacheUsedSteps;
+use Omniauth\Otp\Testing\AuthenticatorApp;
+use Omniauth\Otp\TotpMethod;
 use Symfony\Component\PasswordHasher\Hasher\NativePasswordHasher;
 
 $clock = new FixedClock();                                 // yours: none (the system's); fixed here, the block runs in one go

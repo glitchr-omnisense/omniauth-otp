@@ -1,20 +1,20 @@
 <?php
 
-namespace Omniauth\Totp\Tests\Fixtures;
+namespace Omniauth\Otp\Tests\Fixtures;
 
 use Omniauth\ArrayState;
 use Omniauth\BackupCode\BackupCodeMethod;
 use Omniauth\CacheThrottle;
 use Omniauth\Method\Methods;
 use Omniauth\Omniauth;
+use Omniauth\Otp\CacheUsedSteps;
+use Omniauth\Otp\TotpMethod;
 use Omniauth\Password\PasswordMethod;
 use Omniauth\Testing\ArrayCache;
 use Omniauth\Testing\FixedClock;
 use Omniauth\Testing\InMemoryStore;
 use Omniauth\Testing\InMemoryTotpSecrets;
 use Omniauth\Testing\TestAccount;
-use Omniauth\Totp\CacheUsedSteps;
-use Omniauth\Totp\TotpMethod;
 use Omniauth\TrustedDevice\TrustedDevices;
 use Symfony\Component\PasswordHasher\Hasher\NativePasswordHasher;
 

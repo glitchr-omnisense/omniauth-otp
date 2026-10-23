@@ -1,8 +1,7 @@
 <?php
 
-namespace Omniauth\Totp;
+namespace Omniauth\Otp;
 
-use OTPHP\TOTP;
 use Omniauth\Attempt;
 use Omniauth\Context;
 use Omniauth\Contract\Accounts;
@@ -15,9 +14,10 @@ use Omniauth\Method\Enrolling;
 use Omniauth\Method\Revocable;
 use Omniauth\Method\SecondFactor;
 use Omniauth\Method\Verdict;
+use Omniauth\Otp\Contract\UsedSteps;
 use Omniauth\Proof;
 use Omniauth\SystemClock;
-use Omniauth\Totp\Contract\UsedSteps;
+use OTPHP\TOTP;
 use ParagonIE\ConstantTime\Base32;
 use Psr\Clock\ClockInterface;
 
@@ -34,8 +34,8 @@ use Psr\Clock\ClockInterface;
  * draws a secret as scheb does and gives it with its otpauth:// address
  * (Challenge::$data: 'secret', 'uri' - the host draws the QR code of 'uri');
  * enrolConfirm() checks a first code against it and keeps it in the store.
- * revoke() forgets it. Secrets go through Contract\TotpSecrets as they are;
- * SealedTotpSecrets is the seam for sealing them at rest (QA5).
+ * revoke() forgets it. Secrets go through Contract\TotpSecrets; wrapped in
+ * SealedTotpSecrets with a SodiumSecretBox they are sealed at rest (QA5).
  */
 final class TotpMethod implements SecondFactor, Enrolling, Revocable
 {
@@ -80,7 +80,8 @@ final class TotpMethod implements SecondFactor, Enrolling, Revocable
 
     public function enrolled(object $account): bool
     {
-        return '' !== (string) $this->secrets->secret($account);
+        // A sealed store answers without opening the secret: the rule asks this at every sign-in.
+        return $this->secrets instanceof SealedTotpSecrets ? $this->secrets->has($account) : '' !== (string) $this->secrets->secret($account);
     }
 
     public function verify(Attempt $attempt, Proof $proof, Context $context): Verdict

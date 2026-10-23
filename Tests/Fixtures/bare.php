@@ -1,7 +1,7 @@
 <?php
 
 /*
- * omniauth/totp in plain PHP: no bundle, no container, no framework. The
+ * omniauth/otp in plain PHP: no bundle, no container, no framework. The
  * conductor built by hand on the in-memory stores; an account sets up its
  * authenticator application (a secret, its otpauth:// address, a first
  * code), then signs in with a password and a code; the same code again; the
@@ -14,15 +14,15 @@ use Omniauth\Context;
 use Omniauth\Factor;
 use Omniauth\Method\Methods;
 use Omniauth\Omniauth;
+use Omniauth\Otp\CacheUsedSteps;
+use Omniauth\Otp\Testing\AuthenticatorApp;
+use Omniauth\Otp\TotpMethod;
 use Omniauth\Password\PasswordMethod;
 use Omniauth\Result;
 use Omniauth\Testing\ArrayCache;
 use Omniauth\Testing\FixedClock;
 use Omniauth\Testing\InMemoryStore;
 use Omniauth\Testing\TestAccount;
-use Omniauth\Totp\CacheUsedSteps;
-use Omniauth\Totp\Testing\AuthenticatorApp;
-use Omniauth\Totp\TotpMethod;
 use Symfony\Component\PasswordHasher\Hasher\NativePasswordHasher;
 
 require $autoload = $argv[1];

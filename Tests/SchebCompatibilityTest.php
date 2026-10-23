@@ -1,18 +1,18 @@
 <?php
 
-namespace Omniauth\Totp\Tests;
+namespace Omniauth\Otp\Tests;
 
 use Omniauth\Attempt;
 use Omniauth\Context;
+use Omniauth\Otp\CacheUsedSteps;
+use Omniauth\Otp\Tests\Fixtures\Kit;
+use Omniauth\Otp\Tests\Fixtures\SchebUser;
+use Omniauth\Otp\TotpMethod;
 use Omniauth\Proof;
 use Omniauth\Testing\ArrayCache;
 use Omniauth\Testing\FixedClock;
 use Omniauth\Testing\InMemoryStore;
 use Omniauth\Testing\TestAccount;
-use Omniauth\Totp\CacheUsedSteps;
-use Omniauth\Totp\Tests\Fixtures\Kit;
-use Omniauth\Totp\Tests\Fixtures\SchebUser;
-use Omniauth\Totp\TotpMethod;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Totp\TotpAuthenticator;
@@ -20,7 +20,7 @@ use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Totp\TotpFactory;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
- * omniauth/totp against scheb/2fa itself (the harness installs it beside),
+ * omniauth/otp against scheb/2fa itself (the harness installs it beside),
  * configured as every site configures it today: omnibase's User (SHA1, 30
  * seconds, 6 digits, the identifier as the label), `leeway: 0`, no server
  * name, no issuer. The secrets scheb draws work here, the codes it accepts

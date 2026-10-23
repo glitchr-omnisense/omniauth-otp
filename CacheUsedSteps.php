@@ -1,8 +1,8 @@
 <?php
 
-namespace Omniauth\Totp;
+namespace Omniauth\Otp;
 
-use Omniauth\Totp\Contract\UsedSteps;
+use Omniauth\Otp\Contract\UsedSteps;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\SimpleCache\CacheInterface;
 

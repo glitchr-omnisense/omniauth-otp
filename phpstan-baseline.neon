@@ -97,43 +97,43 @@ parameters:
 			path: Tests/BareTest.php
 
 		-
-			message: '#^Method Omniauth\\Totp\\Tests\\BareTest\:\:foreign\(\) has parameter \$symbols with no value type specified in iterable type array\.$#'
+			message: '#^Method Omniauth\\Otp\\Tests\\BareTest\:\:foreign\(\) has parameter \$symbols with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
 			path: Tests/BareTest.php
 
 		-
-			message: '#^Method Omniauth\\Totp\\Tests\\BareTest\:\:foreign\(\) should return list\<string\> but returns mixed\.$#'
+			message: '#^Method Omniauth\\Otp\\Tests\\BareTest\:\:foreign\(\) should return list\<string\> but returns mixed\.$#'
 			identifier: return.type
 			count: 1
 			path: Tests/BareTest.php
 
 		-
-			message: '#^Method Omniauth\\Totp\\Tests\\BareTest\:\:outside\(\) has parameter \$eager with no value type specified in iterable type array\.$#'
+			message: '#^Method Omniauth\\Otp\\Tests\\BareTest\:\:outside\(\) has parameter \$eager with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
 			path: Tests/BareTest.php
 
 		-
-			message: '#^Method Omniauth\\Totp\\Tests\\BareTest\:\:outside\(\) has parameter \$files with no value type specified in iterable type array\.$#'
+			message: '#^Method Omniauth\\Otp\\Tests\\BareTest\:\:outside\(\) has parameter \$files with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
 			path: Tests/BareTest.php
 
 		-
-			message: '#^Method Omniauth\\Totp\\Tests\\BareTest\:\:outside\(\) should return list\<string\> but returns list\<mixed\>\.$#'
+			message: '#^Method Omniauth\\Otp\\Tests\\BareTest\:\:outside\(\) should return list\<string\> but returns list\<mixed\>\.$#'
 			identifier: return.type
 			count: 1
 			path: Tests/BareTest.php
 
 		-
-			message: '#^Method Omniauth\\Totp\\Tests\\BareTest\:\:php\(\) has parameter \$arguments with no value type specified in iterable type array\.$#'
+			message: '#^Method Omniauth\\Otp\\Tests\\BareTest\:\:php\(\) has parameter \$arguments with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
 			path: Tests/BareTest.php
 
 		-
-			message: '#^Method Omniauth\\Totp\\Tests\\BareTest\:\:php\(\) should return array\<string, mixed\> but returns array\<mixed\>\.$#'
+			message: '#^Method Omniauth\\Otp\\Tests\\BareTest\:\:php\(\) should return array\<string, mixed\> but returns array\<mixed\>\.$#'
 			identifier: return.type
 			count: 1
 			path: Tests/BareTest.php
@@ -157,13 +157,13 @@ parameters:
 			path: Tests/BareTest.php
 
 		-
-			message: '#^Parameter \#1 \$files of static method Omniauth\\Totp\\Tests\\BareTest\:\:outside\(\) expects array, mixed given\.$#'
+			message: '#^Parameter \#1 \$files of static method Omniauth\\Otp\\Tests\\BareTest\:\:outside\(\) expects array, mixed given\.$#'
 			identifier: argument.type
 			count: 3
 			path: Tests/BareTest.php
 
 		-
-			message: '#^Parameter \#1 \$symbols of static method Omniauth\\Totp\\Tests\\BareTest\:\:foreign\(\) expects array, mixed given\.$#'
+			message: '#^Parameter \#1 \$symbols of static method Omniauth\\Otp\\Tests\\BareTest\:\:foreign\(\) expects array, mixed given\.$#'
 			identifier: argument.type
 			count: 3
 			path: Tests/BareTest.php
@@ -175,7 +175,7 @@ parameters:
 			path: Tests/BareTest.php
 
 		-
-			message: '#^Parameter \#2 \$eager of static method Omniauth\\Totp\\Tests\\BareTest\:\:outside\(\) expects array, mixed given\.$#'
+			message: '#^Parameter \#2 \$eager of static method Omniauth\\Otp\\Tests\\BareTest\:\:outside\(\) expects array, mixed given\.$#'
 			identifier: argument.type
 			count: 3
 			path: Tests/BareTest.php
@@ -183,7 +183,7 @@ parameters:
 		-
 			message: '#^Parameter \#2 \$haystack of static method PHPUnit\\Framework\\Assert\:\:assertContains\(\) expects iterable, mixed given\.$#'
 			identifier: argument.type
-			count: 5
+			count: 6
 			path: Tests/BareTest.php
 
 		-
@@ -253,7 +253,7 @@ parameters:
 			path: Tests/Fixtures/bare.php
 
 		-
-			message: '#^Parameter \#1 \$uri of static method Omniauth\\Totp\\Testing\\AuthenticatorApp\:\:scan\(\) expects string, mixed given\.$#'
+			message: '#^Parameter \#1 \$uri of static method Omniauth\\Otp\\Testing\\AuthenticatorApp\:\:scan\(\) expects string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: Tests/Fixtures/bare.php
@@ -313,7 +313,7 @@ parameters:
 			path: Tests/TotpMethodTest.php
 
 		-
-			message: '#^Method Omniauth\\Totp\\Tests\\TotpMethodTest\:\:rfcVectors\(\) return type has no value type specified in iterable type iterable\.$#'
+			message: '#^Method Omniauth\\Otp\\Tests\\TotpMethodTest\:\:rfcVectors\(\) return type has no value type specified in iterable type iterable\.$#'
 			identifier: missingType.iterableValue
 			count: 1
 			path: Tests/TotpMethodTest.php

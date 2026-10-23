@@ -1,13 +1,13 @@
 <?php
 
-namespace Omniauth\Totp\Contract;
+namespace Omniauth\Otp\Contract;
 
 /**
- * The seam for the secrets at rest (Marco's decision QA5, 2026-10-20: the
- * TOTP secret encrypted with sodium, its key in the secrets vault, in a step
- * of its own). omniauth/totp ships no implementation yet: SealedTotpSecrets
- * wraps the application's TotpSecrets store with a box when there is one, and
- * TotpMethod never knows.
+ * The secrets at rest (Marco's decision QA5, 2026-10-20: the TOTP secret
+ * encrypted with sodium, its key in the secrets vault). SodiumSecretBox is the
+ * box; SealedTotpSecrets wraps the application's TotpSecrets store with it,
+ * and TotpMethod never knows. Both hosts (omnibridge/symfony,
+ * omnibridge/laravel) build it from the same key.
  */
 interface SecretBox
 {

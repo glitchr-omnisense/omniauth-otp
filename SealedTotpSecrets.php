@@ -1,15 +1,18 @@
 <?php
 
-namespace Omniauth\Totp;
+namespace Omniauth\Otp;
 
 use Omniauth\Contract\TotpSecrets;
-use Omniauth\Totp\Contract\SecretBox;
+use Omniauth\Otp\Contract\SecretBox;
 
 /**
- * An application's TotpSecrets store with its secrets sealed by a box: what
- * the store keeps is the box's, what TotpMethod reads is the base32 secret.
- * The seam QA5 asked for - encryption at rest comes in a step of its own,
- * with a box (sodium, the key in the secrets vault) and the rows rewritten.
+ * An application's TotpSecrets store with its secrets sealed by a box
+ * (SodiumSecretBox: Marco's decision QA5): what the store keeps is the box's,
+ * what TotpMethod reads is the base32 secret. A secret is opened only when a
+ * code is verified or the enrolment's QR code is drawn (secret()); whether an
+ * account has one is read without opening it (has()). A secret that does not
+ * open throws (Exception\UnreadableSecret): never "no secret", which would let
+ * the account in without its second factor.
  */
 final class SealedTotpSecrets implements TotpSecrets
 {
@@ -24,6 +27,12 @@ final class SealedTotpSecrets implements TotpSecrets
         $stored = $this->store->secret($account);
 
         return null === $stored || '' === $stored ? $stored : $this->box->open($stored);
+    }
+
+    /** Whether the account has a secret, without opening it. */
+    public function has(object $account): bool
+    {
+        return '' !== (string) $this->store->secret($account);
     }
 
     public function enable(object $account, #[\SensitiveParameter] string $secret): void

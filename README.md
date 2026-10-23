@@ -1,6 +1,6 @@
-# omniauth/totp
+# omniauth/otp
 
-Authenticator applications (TOTP, RFC 6238) for
+One-time passwords - authenticator applications (TOTP, RFC 6238) - for
 [omniscient/omniauth](https://github.com/glitchr-studio/omniauth), **under any PHP host**, over
 spomky-labs/otphp - the library scheb/2fa verifies with, on the same parameters, so the secrets an
 application keeps today go on working and a code scheb accepts is accepted here. Once: the same
@@ -10,13 +10,14 @@ code is refused the second time.
 use Omniauth\{ArrayState, Context, Factor, Omniauth};
 use Omniauth\Method\Methods;
 use Omniauth\Password\PasswordMethod;
-use Omniauth\Totp\{CacheUsedSteps, TotpMethod};
+use Omniauth\Otp\{CacheUsedSteps, SealedTotpSecrets, SodiumSecretBox, TotpMethod};
 
 $omniauth = new Omniauth(
     accounts: $accounts,                                   // your accounts, behind Omniauth\Contract\Accounts
     methods: new Methods([
         new PasswordMethod($accounts, $passwords),
-        new TotpMethod($accounts, $secrets, new CacheUsedSteps($pool)),   // $secrets: Contract\TotpSecrets (user.secret); $pool: PSR-6 or PSR-16
+        new TotpMethod($accounts, new SealedTotpSecrets($secrets, SodiumSecretBox::fromBase64($key)), new CacheUsedSteps($pool)),
+        // $secrets: Contract\TotpSecrets (user.secret); $key: from your vault, never a file of the repository; $pool: PSR-6 or PSR-16
     ]),
     state: new ArrayState($_SESSION),
 );
@@ -33,7 +34,8 @@ $enrolment->confirm($context, ['code' => '123456']);       // a first code: the 
 ```
 
 It requires omniscient/omniauth, spomky-labs/otphp ^11.3 (and paragonie's constant-time encoding,
-which otphp requires) and the PSR cache and clock interfaces. No framework.
+which otphp requires), PHP's sodium extension (bundled with PHP) and the PSR cache and clock
+interfaces. No framework.
 
 ## The same as scheb/2fa
 
@@ -57,13 +59,24 @@ keeps it in any PSR-6 pool or PSR-16 cache - the host's cache pool - for as long
 still verify. Read then written, not atomic: two requests with the same code at the same instant may
 both pass (the conductor's throttle, five codes per 15 minutes per account, bounds the rest).
 
-## The secrets at rest: the seam (QA5)
+## The secrets at rest (QA5)
 
-Marco's decision QA5 encrypts the TOTP secrets (sodium, the key in the secrets vault) in a step of
-its own, after lesringostars switches. The seam is here: `Contract\SecretBox` (`seal()`, `open()`)
-and `SealedTotpSecrets`, which wraps the application's `TotpSecrets` store with a box - the method
-never knows. No box ships yet; until then secrets go through the store as they are (base32, in
-clear, as today).
+Marco's decision QA5: the TOTP secrets are encrypted at rest with libsodium. `SodiumSecretBox`
+seals a secret with `sodium_crypto_secretbox` (XSalsa20-Poly1305, encrypted and authenticated)
+under a 32-byte key, as `otp:v1:` followed by the base64url of the nonce and the box (130
+characters for a 52-character secret: omnibase's `user.secret`, VARCHAR 255, holds it).
+`SealedTotpSecrets` wraps the application's `TotpSecrets` store with the box: the store keeps the
+box's text, `TotpMethod` reads the base32 secret. A secret is opened only to verify a code or to
+draw the QR code; whether an account has one is read without opening it. A secret kept in clear
+before the box is read as it is (it has no prefix) until the rows are rewritten; a secret that does
+not open (another key, an altered row) throws `Exception\UnreadableSecret` - never "no secret",
+which would let the account in without its second factor.
+
+The key comes from the host's secrets vault or environment, in base64
+(`SodiumSecretBox::fromBase64()`), never from a file of the repository; the two hosts of one
+database (a Symfony site and its Laravel twin) use the same key: omnibridge/symfony reads
+`omniauth.totp.secret_key`, omnibridge/laravel `omniauth.totp.secret_key` of `config/omniauth.php`.
+Rotating it, and rewriting existing rows: [the method's page](docs/otp.md#sealed-secrets-qa5).
 
 ## The shape
 
@@ -71,16 +84,28 @@ clear, as today).
 |---|---|
 | `TotpMethod` | a second factor (`SecondFactor`, `Enrolling`, `Revocable`): `verify()`, `enrolBegin()`/`enrolConfirm()`, `revoke()`, `uri()`, `code()`, `secret()` |
 | `Contract\UsedSteps`, `CacheUsedSteps` | a code once |
-| `Contract\SecretBox`, `SealedTotpSecrets` | the seam for sealed secrets |
+| `Contract\SecretBox`, `SodiumSecretBox`, `SealedTotpSecrets` | the secrets sealed at rest (`Exception\UnreadableSecret` when one does not open) |
 | `Testing\AuthenticatorApp` | the person's phone: scans the enrolment's `uri`, shows the code of the moment |
 
 The store of the secrets is omniauth's `Omniauth\Contract\TotpSecrets` (omnibase: `user.secret`,
 step AU4); `Omniauth\Testing\InMemoryTotpSecrets` in tests.
 
+## Formerly omniauth/totp
+
+This package was **omniauth/totp** until 2026-10-23 (renamed: one-time passwords, TOTP today and
+HOTP possible), with its history. It `replace`s omniauth/totp, so the two are never installed
+together, and the former namespace `Omniauth\Totp\` stays an alias of `Omniauth\Otp\` for one
+release (`Legacy/`: each former name loads the new class, with a deprecation notice). The class
+names (`TotpMethod`...), the method's name (`'totp'`, `Factor::Totp`) and the codes do not change.
+
+```sh
+composer remove omniauth/totp && composer require omniauth/otp
+```
+
 ## Documentation
 
 - [Installation, in plain PHP](docs/installation.md)
-- [The method](docs/totp.md)
+- [The method](docs/otp.md)
 
 ## Verified, and not
 
@@ -102,9 +127,16 @@ step AU4); `Omniauth\Testing\InMemoryTotpSecrets` in tests.
   - `docs/installation.md` run as written; in plain PHP (`BareTest`), an enrolment and a sign-in by
     hand loading nothing but omniauth, otphp, paragonie's encoding, the PSR interfaces and
     symfony/password-hasher - no class of a framework, of scheb/2fa or of an application.
-- Not verified: a real phone's application (at AU7, in Chrome, against the site); the host's store
-  (`Base\Auth\UserTotpSecrets`, AU4); concurrent tries of the same code against `CacheUsedSteps`;
-  sealed secrets (no box yet: QA5's own step).
+  - **sealed secrets**: the format (prefix, base64url, 130 characters), a new nonce each time, the
+    same key on another instance, a clear secret read as it is, a sealed one not sealed twice;
+    another key, an altered, a truncated or a non-base64 value refused with `UnreadableSecret`
+    (never taken for "no secret": the second factor is still asked); the key in base64 (standard
+    and URL-safe), refused at a wrong length; an enrolment and a sign-in on a sealed store - the
+    store keeps the box's text, the rule asks whether the account has a secret without opening it,
+    the code is verified with the secret opened, the settings' QR address is the secret's;
+  - the former `Omniauth\Totp\` names: each the new class, each with its deprecation notice.
+- Not verified: a real phone's application (at AU7, in Chrome, against the site); concurrent tries
+  of the same code against `CacheUsedSteps`.
 
 ## Licence
 

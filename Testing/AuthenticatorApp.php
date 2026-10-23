@@ -1,6 +1,6 @@
 <?php
 
-namespace Omniauth\Totp\Testing;
+namespace Omniauth\Otp\Testing;
 
 use OTPHP\Factory;
 use OTPHP\TOTP;

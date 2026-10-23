@@ -1,6 +1,6 @@
 <?php
 
-namespace Omniauth\Totp\Tests\Fixtures;
+namespace Omniauth\Otp\Tests\Fixtures;
 
 use Scheb\TwoFactorBundle\Model\Totp\TotpConfiguration;
 use Scheb\TwoFactorBundle\Model\Totp\TotpConfigurationInterface;
