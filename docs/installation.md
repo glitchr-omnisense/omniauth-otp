@@ -1,9 +1,9 @@
 ---
 title: Installation
-order: 1
+order: 10
 ---
 
-# Installation, in plain PHP
+## Installation
 
 ```sh
 composer require omniscient/omniauth omniauth/otp
@@ -80,4 +80,13 @@ The parameters are scheb/2fa's, as every site sets them today: SHA1, 30 seconds,
 `leeway: 0` (`TotpMethod::ALGORITHM`, `PERIOD`, `DIGITS`, `LEEWAY`), no server name, no issuer. The
 secrets those sites keep (`user.secret`, base32) are read as they are.
 
-Next: [the method](totp.md).
+Run in omniauth's harness on 2026-10-25 (the block as it is, `Tests/DocsTest.php`), it prints:
+
+```
+otpauth://totp/ringo?secret=...
+set up
+second-factor-required: totp
+authenticated by password + totp
+```
+
+Next: [the method](otp.md).

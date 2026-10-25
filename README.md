@@ -104,8 +104,9 @@ composer remove omniauth/totp && composer require omniauth/otp
 
 ## Documentation
 
+- [Overview](docs/index.md): options, capabilities, the hosts' keys, errors
 - [Installation, in plain PHP](docs/installation.md)
-- [The method](docs/otp.md)
+- [The method](docs/otp.md): signing in, setting it up, turning it off, the sealed secrets and their key
 
 ## Verified, and not
 
