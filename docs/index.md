@@ -1,7 +1,7 @@
 # omniauth/otp
 
 One-time passwords - authenticator applications (TOTP, RFC 6238) - as a second factor of
-[omniscient/omniauth](https://github.com/glitchr-studio/omniauth), under any PHP host, over
+[omnisense/omniauth](https://github.com/glitchr-omnisense/omniauth), under any PHP host, over
 spomky-labs/otphp: the library scheb/2fa verifies with, on the same parameters, so the secrets an
 application keeps today go on working and a code scheb/2fa accepts is accepted here - once: the
 same code is refused the second time. The secrets can be sealed at rest with libsodium (Marco's
@@ -19,10 +19,10 @@ deprecation notice). The factor keeps its name, `totp` (`Factor::Totp`).
 ## Installation
 
 ```sh
-composer require omniscient/omniauth omniauth/otp
+composer require omnisense/omniauth omniauth/otp
 ```
 
-Requires PHP 8.2 with `ext-sodium` (bundled with PHP), `omniscient/omniauth` (1.x),
+Requires PHP 8.2 with `ext-sodium` (bundled with PHP), `omnisense/omniauth` (1.x),
 `spomky-labs/otphp` (^11.3), `paragonie/constant_time_encoding` (^2.6 or ^3.0), `psr/cache`,
 `psr/simple-cache` and `psr/clock`. No framework. Under omnibridge/symfony and omnibridge/laravel,
 the `totp` key turns it on ([Hosts](#hosts)).

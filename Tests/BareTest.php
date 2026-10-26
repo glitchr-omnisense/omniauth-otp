@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 final class BareTest extends TestCase
 {
     private const FOREIGN = '~^(?:Symfony\\\\(?!Component\\\\PasswordHasher\\\\|Polyfill\\\\)|(?:Illuminate|Laravel|Doctrine|Twig|Scheb|Lcobucci|Webauthn|League|Omnibridge|Base|App)\\\\)~';
-    private const ALLOWED_FILES = '~/vendor/(?:psr/(?:cache|clock|event-dispatcher|simple-cache)|symfony/password-hasher|spomky-labs/otphp|paragonie/constant_time_encoding|omniscient/omniauth|omniauth/otp|composer)/|/vendor/autoload\.php$~';
+    private const ALLOWED_FILES = '~/vendor/(?:psr/(?:cache|clock|event-dispatcher|simple-cache)|symfony/password-hasher|spomky-labs/otphp|paragonie/constant_time_encoding|omnisense/omniauth|omniauth/otp|composer)/|/vendor/autoload\.php$~';
 
     public function testAnEnrolmentAndASignInByHandLoadNothingElse(): void
     {

@@ -6,10 +6,10 @@ order: 10
 # Installation
 
 ```sh
-composer require omniscient/omniauth omniauth/otp
+composer require omnisense/omniauth omniauth/otp
 ```
 
-It requires omniscient/omniauth, spomky-labs/otphp (the library scheb/2fa verifies with) and the
+It requires omnisense/omniauth, spomky-labs/otphp (the library scheb/2fa verifies with) and the
 PSR cache and clock interfaces. No framework: the secrets stay in your table, behind omniauth's
 `Contract\TotpSecrets`; the steps already used, in any PSR-6 pool or PSR-16 cache.
 

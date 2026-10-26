@@ -3,7 +3,7 @@
     "type": "library",
     "description": "Omniauth's one-time passwords over spomky-labs/otphp, under any PHP host - authenticator applications (TOTP; HOTP possible): the second factor, its enrolment (a secret and its otpauth:// address) and its revocation, with scheb/2fa's parameters (SHA1, 30 s, 6 digits, the same leeway and provisioning address) so the secrets an application keeps today go on working, a code accepted once only, and the secrets sealed at rest with libsodium (SodiumSecretBox, the key in the host's vault; the ones kept in clear read until rewritten). Formerly omniauth/totp, which it replaces (the Omniauth\\Totp\\ names stay aliases for one release).",
     "keywords": ["authentication", "two-factor", "2fa", "totp", "hotp", "authenticator", "otp", "sodium", "framework-agnostic", "omniauth"],
-    "homepage": "https://github.com/glitchr-studio/omniauth-otp",
+    "homepage": "https://github.com/glitchr-omnisense/omniauth-otp",
     "license": "MIT",
     "authors": [
         {
@@ -14,7 +14,7 @@
     "require": {
         "php": ">=8.2",
         "ext-sodium": "*",
-        "omniscient/omniauth": "^1.0@dev",
+        "omnisense/omniauth": "^1.0@dev",
         "paragonie/constant_time_encoding": "^2.6|^3.0",
         "psr/cache": "^2.0|^3.0",
         "psr/clock": "^1.0",

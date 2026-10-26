@@ -1,7 +1,7 @@
 # omniauth/otp
 
 One-time passwords - authenticator applications (TOTP, RFC 6238) - for
-[omniscient/omniauth](https://github.com/glitchr-studio/omniauth), **under any PHP host**, over
+[omnisense/omniauth](https://github.com/glitchr-omnisense/omniauth), **under any PHP host**, over
 spomky-labs/otphp - the library scheb/2fa verifies with, on the same parameters, so the secrets an
 application keeps today go on working and a code scheb accepts is accepted here. Once: the same
 code is refused the second time.
@@ -33,7 +33,7 @@ $challenge = $enrolment->begin($context);                  // $challenge->data: 
 $enrolment->confirm($context, ['code' => '123456']);       // a first code: the secret is kept
 ```
 
-It requires omniscient/omniauth, spomky-labs/otphp ^11.3 (and paragonie's constant-time encoding,
+It requires omnisense/omniauth, spomky-labs/otphp ^11.3 (and paragonie's constant-time encoding,
 which otphp requires), PHP's sodium extension (bundled with PHP) and the PSR cache and clock
 interfaces. No framework.
 
