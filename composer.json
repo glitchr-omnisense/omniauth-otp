@@ -44,6 +44,9 @@
         }
     },
     "extra": {
+        "omnisense": {
+            "policy": "policy.json"
+        },
         "branch-alias": {
             "dev-1.x": "1.x-dev"
         }

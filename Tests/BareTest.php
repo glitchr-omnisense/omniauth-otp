@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 final class BareTest extends TestCase
 {
     private const FOREIGN = '~^(?:Symfony\\\\(?!Component\\\\PasswordHasher\\\\|Polyfill\\\\)|(?:Illuminate|Laravel|Doctrine|Twig|Scheb|Lcobucci|Webauthn|League|Omnibridge|Base|App)\\\\)~';
-    private const ALLOWED_FILES = '~/vendor/(?:psr/(?:cache|clock|event-dispatcher|simple-cache)|symfony/password-hasher|spomky-labs/otphp|paragonie/constant_time_encoding|omnisense/omniauth|omniauth/otp|composer)/|/vendor/autoload\.php$~';
+    private const ALLOWED_FILES = '~/vendor/(?:omnisense/contracts|psr/(?:cache|clock|event-dispatcher|simple-cache)|symfony/password-hasher|spomky-labs/otphp|paragonie/constant_time_encoding|omnisense/omniauth|omniauth/otp|composer)/|/vendor/autoload\.php$~';
 
     public function testAnEnrolmentAndASignInByHandLoadNothingElse(): void
     {
@@ -75,7 +75,7 @@ final class BareTest extends TestCase
      */
     private static function outside(array $files, array $eager): array
     {
-        $roots = [realpath(\dirname(__DIR__)).'/', realpath(\dirname((string) (new \ReflectionClass(Omniauth::class))->getFileName())).'/'];
+        $roots = [realpath(\dirname(__DIR__)).'/', realpath(\dirname((string) (new \ReflectionClass(Omniauth::class))->getFileName())).'/', realpath(\dirname((string) (new \ReflectionClass(\Omnisense\Contracts\Exception\ExceptionInterface::class))->getFileName(), 2)).'/'];
         $eager = array_map('dirname', array_filter($eager));
 
         return array_values(array_filter($files, static fn (?string $file) => null !== $file

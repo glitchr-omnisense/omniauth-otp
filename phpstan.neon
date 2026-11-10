@@ -9,7 +9,7 @@ parameters:
     paths:
         - .
     excludePaths:
-        - vendor
+        - vendor (?)
         # The former Omniauth\Totp\ names, aliases for one release.
         - Legacy
     reportUnmatchedIgnoredErrors: false
