@@ -6,6 +6,13 @@ spomky-labs/otphp - the library scheb/2fa verifies with, on the same parameters,
 application keeps today go on working and a code scheb accepts is accepted here. Once: the same
 code is refused the second time.
 
+```sh
+composer require omnisense/omniauth omniauth/otp
+```
+
+No account anywhere: the secrets are the application's, the codes come from any authenticator
+application.
+
 ```php
 use Omniauth\{ArrayState, Context, Factor, Omniauth};
 use Omniauth\Method\Methods;
